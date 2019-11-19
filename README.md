@@ -37,7 +37,7 @@ detect cylindrical objects from CAD file (.STEP) to propose sub-axis candidates
 "file_id": int,
 "file_name": str,
 "EA": int,
-"holes": [hole]
+"hole": [hole]
 }
 
 hole{
