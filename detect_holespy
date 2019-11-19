@@ -14,13 +14,6 @@ import glob
 from tqdm import tqdm
 import json
 
-def round_all(stuff):
-    if isinstance(stuff, list):
-        return [round_all(x) for x in stuff]
-    if isinstance(stuff, tuple):
-        return tuple(round_all(x) for x in stuff)
-    return round(float(stuff), 2)
-
 def detect_holes(step_file, doc_name):
 
     # read step file
@@ -92,6 +85,10 @@ def detect_holes(step_file, doc_name):
             FreeCADGui.updateGui()
             time.sleep(0.05)
 
+    if args.obj:
+        obj_path = './obj/' + step_file.split('/')[-1].split('.')[0] + '.obj'
+        import Mesh
+        Mesh.export([pf], obj_path)
     return holes
 
 
@@ -102,6 +99,7 @@ if __name__ == "__main__":
     parser.add_argument("-i","--input_path", type=str, default='./step/stefan', help="path for the step files")
     parser.add_argument("-o","--output_path", type=str, default='./hole_info', help="path for the output json file")
     parser.add_argument("--gui", type=int, default='0', help="enable gui mode for x seconds")
+    parser.add_argument("--obj", action='store_true', help="convert step file to obj and save it")
     parser.add_argument("--doc", type=str, default='doc', help="document name")
 
     args = parser.parse_args()
@@ -121,7 +119,6 @@ if __name__ == "__main__":
             hole_info['EA'] = 1
         else:
             hole_info['EA'] = int(file_name[file_name.find('(')+1:file_name.find('ea)')])
-
 
         print("detect {} holes in {}".format(hole_info['EA'], hole_info['file_name']), '\n')
         holes = detect_holes(input_path, args.doc + str(i))
