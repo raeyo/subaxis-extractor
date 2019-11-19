@@ -25,6 +25,9 @@ detect cylindrical objects from CAD file (.STEP) to propose sub-axis candidates
     +-- part1.json
     +-- part2.json
 
++-- obj # output .obj file
+    +-- part1.obj
+    +-- part2.obj
 ```
 
 ## data format
@@ -34,7 +37,6 @@ detect cylindrical objects from CAD file (.STEP) to propose sub-axis candidates
 "file_id": int,
 "file_name": str,
 "EA": int,
-"n_hole": int ,
 "holes": [hole]
 }
 
@@ -44,7 +46,7 @@ hole{
 "position", [x, y, z],
 "x_axis", [nx, ny, nz],
 "y_axis", [nx, ny, nz],
-"axis", [nx, ny, nz],
+"z_axis", [nx, ny, nz],
 }
 
 ```
